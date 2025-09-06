@@ -1,8 +1,10 @@
-@echo off
-title 🎛️ Ultimate CMD Tool
-color 0A
-chcp 65001 >nul
+@echo off 
 setlocal enabledelayedexpansion
+color 0A
+chcp 65001 >null
+title 🎛️ Ultimate CMD Tool
+
+
 
 :: Greeting
 echo ======================================
@@ -38,28 +40,50 @@ cls
 echo ======================================
 echo 🌐 Server Status Check
 echo ======================================
-echo 1️⃣  Default Servers (🇮🇳 india.gov.in, Google, YouTube)
-echo 2️⃣  Custom Server
-set /p srvChoice="👉 Choose (1 or 2): "
+echo 1. Default Servers (india.gov.in, Google, YouTube)
+echo 2. Custom Server
+echo 3. Back
+
+set /p srvChoice=Enter your choice (1/2/3):
+
 
 if %srvChoice%==1 (
-    echo 🔍 Checking servers...
+    echo 🔍 Checking india.gov.in ...
     ping -n 1 www.india.gov.in >nul && echo ✅ india.gov.in is UP || echo ❌ india.gov.in is DOWN
+
+    echo 🔍 Checking google.com ...
     ping -n 1 google.com >nul && echo ✅ google.com is UP || echo ❌ google.com is DOWN
+
+    echo 🔍 Checking youtube.com ...
     ping -n 1 youtube.com >nul && echo ✅ youtube.com is UP || echo ❌ youtube.com is DOWN
+
     pause
-    goto menu
+    goto serverCheck
 )
 
 if %srvChoice%==2 (
-    set /p customSrv="👉 Enter server/website (e.g. google or google.com): "
-    echo 🔍 Checking %customSrv% ...
-    ping -n 1 %customSrv% >nul && echo ✅ %customSrv% is UP || echo ❌ %customSrv% is DOWN
+    set "customSrv="
+    set /p customSrv="👉Enter server/website (e.g. google.com):" 
+    if not "!customSrv!"=="" (
+        echo 🔍 Checking !customSrv! ...
+        ping -n 1 !customSrv! >nul && echo ✅ !customSrv! is UP || echo ❌ !customSrv! is DOWN
+    ) else (
+        echo ⚠️ You didn’t type anything!
+    )
     pause
+    goto serverCheck
+)
+
+if %srvChoice%==3 (
     goto menu
 )
 
-goto menu
+echo ⚠️ Invalid choice! Try again.
+pause
+goto serverCheck
+
+
+
 
 :weather
 cls
